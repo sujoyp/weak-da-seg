@@ -1,0 +1,12 @@
+# macOS stuff
+.DS_Store
+
+# Python caches
+**/__pycache__
+
+# Pre-trained model directory
+model
+
+# Output directories
+result
+snapshot

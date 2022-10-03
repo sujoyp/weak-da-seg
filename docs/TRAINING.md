@@ -8,6 +8,7 @@ In general, the `run_weak_da.sh` script gives an example of how to train a model
 
 * During training, models are saved in the `snapshot` folder (default)
 * Specify `--val` in `run_weak_da.sh` if there is a validation set with ground truths in the target domain
+* The initialization of DeepLab models can be downloaded for [GTA5](https://drive.google.com/file/d/1n0zrw_utoFPoR--KwBy8FOQSWWPcKPwy/view?usp=sharing) and [other source datasets](https://drive.google.com/file/d/1mykAx3BW9B7upnIK6rZFDfpvtctWI11m/view?usp=sharing).
 
 
 ## Dataset
@@ -21,11 +22,11 @@ If the GPU cannot fit the original size, one can specify a smaller size but shou
 
 ### How to use pixel-adapted (via CycleGAN) images
 
-Need the images for the source domain (GTA5, SYNTHIA). The code uses these images during training if the option `use_pixeladapt` is turned ON. The code assumes the data to be stored at `data/cycleGAN_output/gta5` and `data/cycleGAN_output/synthia` for GTA5 and SYNTHIA, respectively. You can create symbolic links. The underlying structure for both paths should follow the same as how the GTA5 and SYNTHIA images are structured, with the same file names. For SYNTHIA, for example, it's `RGB/<filename>`.
+Need the images for the source domain (GTA5, SYNTHIA). The code uses these images during training if the option `use-pixeladapt` is turned ON. The code assumes the data to be stored at `data/cycleGAN_output/gta5` and `data/cycleGAN_output/synthia` for GTA5 and SYNTHIA, respectively. You can create symbolic links. The underlying structure for both paths should follow the same as how the GTA5 and SYNTHIA images are structured, with the same file names. For SYNTHIA, for example, it's `RGB/<filename>`.
 
 
 ## Data Loader
-* In order to load your dataset, one would need to write your own data loader. Please check examples in the `lib/dataset` folder, where `gta5.py` is one example for source and `cityscapes.py` is one for target.
+* In order to load your dataset, one would need to write your own data loader. Please check examples in the `daweak/dataset` folder, where `gta5.py` is one example for source and `cityscapes.py` is one for target.
 Note that, as long as the images are successfully loaded, the format of the data loader can be different (depend on the data structure of the dataset).
 
 
@@ -36,7 +37,7 @@ Therefore, one would also have your own category definition as defined in your s
 
 ## Parameters for Training
 
-* When using GTA5 as the source domain, set the pre-trained model as `pretrain="model/gta5_pretrained.pth"`. If the source domain is the other dataset, set `pretrain="model/MS_DeepLab_resnet_pretrained_COCO_noclasslayer.pth"`.
+* When using GTA5 as the source domain, set the pre-trained model as `pretrain="models/gta5_pretrained.pth"`. If the source domain is the other dataset, set `pretrain="models/MS_DeepLab_resnet_pretrained_COCO_init.pth"`.
 
 * There are two options: 1) purely unsupervised domain adaptation (no any ground truth annotations in the target domain), and 2) weakly-supervised domain adaptation (image-level or point-level ground truths in the target domain)
 
@@ -46,7 +47,7 @@ Therefore, one would also have your own category definition as defined in your s
 
 * Specify whether to use point-level weak supervision by setting `--use-pointloss`
 
-* Specify whether to use pixel-level adaptation by setting `--use_pixeladapt`, e.g., in the GTA5 data loader, line 44 in `./lib/dataset/gta5.py`.
+* Specify whether to use pixel-level adaptation by setting `--use-pixeladapt`, e.g., in the GTA5 data loader, line 44 in `./daweak/dataset/gta5.py`.
 
 * Training Iteration: specify how many itertations `num_steps` to train the model and when to do early stopping `num_steps_stop` for efficiency, as training too long may overfit to the source data, which is not good for the target domain.
 One practice is to specify `num_steps` roughly equal to 10 times the number of source images, i.e., 10 epochs.

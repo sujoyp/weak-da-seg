@@ -9,12 +9,12 @@ target="cityscapes"
 
 if [ "$source" = "gta5" ]
 then
-    source_path="path/to/GTAdata"
+    source_path="datasets/gta5"
 fi
 
 if [ "$target" = "cityscapes" ]
 then
-    target_path="path/to/cityscapes/data"
+    target_path="datasets/cityscapes"
 fi
 
 if [ "$source" = "gta5" ]
@@ -50,16 +50,23 @@ lambda_weak_cwadv2=0.001
 lr=2.5e-4
 lr_d=1e-4
 
-# save models
-## training models when GTA is the source domain ##
-# pretrain="model/"$source"_pretrained.pth"
+#
+# training models
+#
+
+## training models when GTA is the source domain
+pretrain="models/"$source"_pretrained.pth"
 
 ## training models when other dataset is the source domain ##
-# pretrain="model/MS_DeepLab_resnet_pretrained_COCO_noclasslayer.pth"
+# pretrain="models/MS_DeepLab_resnet_pretrained_COCO_init.pth"
 
-## testing models ##
-# pretrain="snapshot/gta5-cityscapes-weak-cw/G-gta5-cityscapes.pth"
-pretrain="model/gta5-cityscapes-pseudoweak-cw.pth"
+
+#
+# testing models
+#   NB: Do not forget to add the argument `--val-only` below
+#
+# pretrain="model/gta5-cityscapes-pseudoweak-cw.pth"
+
 
 snapshot_dir="snapshot/"$source"-"$target"-weak-cw"
 result_dir="result/"$source"-"$target"-weak-cw"
@@ -69,7 +76,10 @@ pweak_th=0.2
 
 # use [--val] to run testing during training for selecting better models (require a validation set in the target domain with ground truths)
 
+
+#
 # Run the code
+#
 # IF `--val-only` IS ADDED, THE CODE RUNS THE TESTING MODE.
 python train.py \
     --model $model \
@@ -102,4 +112,4 @@ python train.py \
     --use-weak \
     --use-weak-cw \
     --use-pseudo \
-    --val-only
+    --val

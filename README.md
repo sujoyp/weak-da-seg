@@ -23,40 +23,65 @@
 See [docs/INSTALL.md](docs/INSTALL.md) for installation instructions.
 
 
-## Model zoo
+## Getting started
 
-All models can be downloaded from HERE
+Evaluate a pre-trained model on the [CityScapes](https://www.cityscapes-dataset.com/) dataset.
+
+* Download CityScapes and put into `datasets/cityscapes` (the folder `leftImg8bit` should be at `datasets/cityscapes/leftImg8bit`)
+* Download the `pseudoweak-cw-pa` pre-trained model from [here](https://drive.google.com/file/d/1mmZWyff3OKmY0V0C83kO1nnkgsm6vfZc/view?usp=sharing), and store it in the directory `models`.
+* Run the Python command below
+
+``` shell
+python train.py \
+    --model deeplab \
+    --dataset-target cityscapes \
+    --data-path-target datasets/cityscapes \
+    --input-size-source "1280,720" \
+    --input-size-target "1024,512" \
+    --num-classes 19 \
+    --test-split val \
+    --restore-from models/gta5-cityscapes-pseudoweak-cw-pa.pth \
+    --result-dir result/gta5-cityscapes-weak-cw-pa \
+    --use-weak \
+    --use-weak-cw \
+    --use-pseudo \
+    --use-pixeladapt \
+    --val-only
+```
+
+
+## Model zoo
 
 Definitions of the prefix in each model name:
 
 * *pseudoweak*: use weak label loss with pseudo-weak labels, `--use-pseudo` and `--use-weak`
 * *cw*: use category-wise alignment, `--use-weak-cw`
-* *pa*: use pixel-level alignment, `--use_pixeladapt`
+* *pa*: use pixel-level alignment, `--use-pixeladapt`
 * *weak-image*: use weak label loss with ground truth image-level weak labels, `--use-pseudo` is false and `--use-weak`
 * *weak-1point*: use weak label loss with ground truth point-level weak labels, `--use-pointloss` and `--use-weak`
 
 
 ### Source: GTA5
 
-| Filename                               | mIoU  | Paper                                                |
-|----------------------------------------|-------|------------------------------------------------------|
-| `gta5-cityscapes-pseudoweak-cw-pa.pth` | 48.02 | Table 1 - "Ours (UDA)" -- NOTE: Paper reports 48.2!! |
-| `gta5-cityscapes-weak-image-cw-pa.pth` | 53.02 | Table 1 - "Ours (WDA: Image)"                        |
-| `gta5-cityscapes-weak-1point.pth`      | 56.42 | Table 1 - "Ours (WDA: Point)"                        |
-|----------------------------------------|-------|------------------------------------------------------|
-| `gta5-cityscapes-pseudoweak.pth`       | 44.2  | Table 3 - Pseudo-Weak +L_c                           |
-| `gta5-cityscapes-pseudoweak-cw.pth`    | 46.55 | Table 3 - Pseudo-Weak +L_c +L^C_adv                  |
+| Name             | mIoU  | Paper                               | Download                                                                                   |
+|------------------|-------|-------------------------------------|--------------------------------------------------------------------------------------------|
+| pseudoweak-cw-pa | 48.02 | Table 1 - "Ours (UDA)" (*)          | [link](https://drive.google.com/file/d/1mmZWyff3OKmY0V0C83kO1nnkgsm6vfZc/view?usp=sharing) |
+| weak-image-cw-pa | 53.02 | Table 1 - "Ours (WDA: Image)"       | [link](https://drive.google.com/file/d/1mn6Q6yx8FT1ZCEzdZH1f7MeulV3VWWGR/view?usp=sharing) |
+| weak-1point      | 56.42 | Table 1 - "Ours (WDA: Point)"       | [link](https://drive.google.com/file/d/1mbuXnjNL_tOZW_ZAELUMuGNPV76Oyp_e/view?usp=sharing) |
+| pseudoweak       | 44.2  | Table 3 - Pseudo-Weak +L_c          | [link](https://drive.google.com/file/d/1meqOWkHLPtVKLUX6W1evyzv0ghYTVFFd/view?usp=sharing) |
+| pseudoweak-cw    | 46.55 | Table 3 - Pseudo-Weak +L_c +L^C_adv | [link](https://drive.google.com/file/d/1moOwe7QxrQ7-WqKshPiu58KWIDkwEaMR/view?usp=sharing) |
+
+* NOTE: Paper reports 48.20!
 
 
 ### Source: Synthia
 
-| Filename                                  | mIoU* | mIoU  | Paper                                |
-|-------------------------------------------|-------|-------|--------------------------------------|
-| `synthia-cityscapes-pseudoweak-cw-pa.pth` | 44.27 | 51.9  | Table 2 - "Ours (UDA)"               |
-| `synthia-cityscapes-weak-image-cw-pa.pth` | 50.6  | 58.51 | Table 2 - "Ours (WDA: Image)"        |
-|-------------------------------------------|-------|-------|--------------------------------------|
-| `synthia-cityscapes-pseudoweak.pth`       | 41.74 | 49.08 | Table 4 - Pseudo-Weak +L_c           |
-| `synthia-cityscapes-pseudoweak-cw.pth`    | 42.65 | 49.91 | Table 4 - Pseudo-Weak +L_c + L^C_adv |
+| Name                 | mIoU* | mIoU  | Paper                                | Download                                                                                   |
+|----------------------|-------|-------|--------------------------------------|--------------------------------------------------------------------------------------------|
+| pseudoweak-cw-pa.pth | 44.27 | 51.9  | Table 2 - "Ours (UDA)"               | [link](https://drive.google.com/file/d/1mt4ZZ0Dv8Fd0Nok9TZ5SlJ5bJWitf2q7/view?usp=sharing) |
+| weak-image-cw-pa.pth | 50.6  | 58.51 | Table 2 - "Ours (WDA: Image)"        | [link](https://drive.google.com/file/d/1muapekNtpoaaYX1aCKyO0Ftr3cCbNhiJ/view?usp=sharing) |
+| pseudoweak.pth       | 41.74 | 49.08 | Table 4 - Pseudo-Weak +L_c           | [link](https://drive.google.com/file/d/1mm-ArWJ-oXKmSUB_JFbIsSzDSkx0SmvX/view?usp=sharing) |
+| pseudoweak-cw.pth    | 42.65 | 49.91 | Table 4 - Pseudo-Weak +L_c + L^C_adv | [link](https://drive.google.com/file/d/1mmkkvmB_Yhy2NKsi-PKrEOY8N5ZbB500/view?usp=sharing) |
 
 
 

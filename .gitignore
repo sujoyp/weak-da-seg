@@ -5,8 +5,8 @@
 **/__pycache__
 
 # Pre-trained model directory
-model
+/model
 
 # Output directories
-result
-snapshot
+/result
+/snapshot

@@ -83,14 +83,16 @@ class Trainer:
 
         # dataset
         data_kwargs = {'data_root': args.data_root, 'max_iters': args.num_steps * args.batch_size}
-        trainset_source = get_dataset(
-            args.dataset_source, path=args.data_path_source, split=args.source_split,
-            mode='train', size=input_size_source, use_pixeladapt=args.use_pixeladapt, **data_kwargs
-        )
-        trainset_target = get_dataset(
-            args.dataset_target, path=args.data_path_target, split=args.target_split,
-            mode='val', size=input_size_target, use_points=args.use_pointloss, **data_kwargs
-        )
+        if not args.val_only:
+            trainset_source = get_dataset(
+                args.dataset_source, path=args.data_path_source, split=args.source_split,
+                mode='train', size=input_size_source, use_pixeladapt=args.use_pixeladapt,
+                **data_kwargs
+            )
+            trainset_target = get_dataset(
+                args.dataset_target, path=args.data_path_target, split=args.target_split,
+                mode='val', size=input_size_target, use_points=args.use_pointloss, **data_kwargs
+            )
         testset = get_dataset(
             args.dataset_target, path=args.data_path_target, split=args.test_split,
             mode='val', size=input_size_target, data_root=args.data_root
@@ -99,10 +101,11 @@ class Trainer:
         # dataloader
         kwargs = {'num_workers': args.num_workers, 'pin_memory': True} \
             if args.cuda else {}
-        self.trainloader_source = data.DataLoader(trainset_source, batch_size=args.batch_size,
-                                                  drop_last=True, shuffle=True, **kwargs)
-        self.trainloader_target = data.DataLoader(trainset_target, batch_size=args.batch_size,
-                                                  drop_last=True, shuffle=True, **kwargs)
+        if not args.val_only:
+            self.trainloader_source = data.DataLoader(trainset_source, batch_size=args.batch_size,
+                                                      drop_last=True, shuffle=True, **kwargs)
+            self.trainloader_target = data.DataLoader(trainset_target, batch_size=args.batch_size,
+                                                      drop_last=True, shuffle=True, **kwargs)
         self.testloader = data.DataLoader(testset, batch_size=1, drop_last=False,
                                           shuffle=False, **kwargs)
 
@@ -281,6 +284,9 @@ class Trainer:
                 )
                 im_output_stack = torch.cat([im_output_stack, im_output], dim=0)
                 im_label_stack = torch.cat([im_label_stack, im_label], dim=0)
+
+            if i % 25 == 0:
+                print(f"[Image {i}/{len(self.testloader)}]")
 
             total_correct += corrects
             total_label += labeleds

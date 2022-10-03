@@ -76,12 +76,12 @@ Definitions of the prefix in each model name:
 
 ### Source: Synthia
 
-| Name                 | mIoU* | mIoU  | Paper                                | Download                                                                                   |
-|----------------------|-------|-------|--------------------------------------|--------------------------------------------------------------------------------------------|
-| pseudoweak-cw-pa.pth | 44.27 | 51.9  | Table 2 - "Ours (UDA)"               | [link](https://drive.google.com/file/d/1mt4ZZ0Dv8Fd0Nok9TZ5SlJ5bJWitf2q7/view?usp=sharing) |
-| weak-image-cw-pa.pth | 50.6  | 58.51 | Table 2 - "Ours (WDA: Image)"        | [link](https://drive.google.com/file/d/1muapekNtpoaaYX1aCKyO0Ftr3cCbNhiJ/view?usp=sharing) |
-| pseudoweak.pth       | 41.74 | 49.08 | Table 4 - Pseudo-Weak +L_c           | [link](https://drive.google.com/file/d/1mm-ArWJ-oXKmSUB_JFbIsSzDSkx0SmvX/view?usp=sharing) |
-| pseudoweak-cw.pth    | 42.65 | 49.91 | Table 4 - Pseudo-Weak +L_c + L^C_adv | [link](https://drive.google.com/file/d/1mmkkvmB_Yhy2NKsi-PKrEOY8N5ZbB500/view?usp=sharing) |
+| Name             | mIoU* | mIoU  | Paper                                | Download                                                                                   |
+|------------------|-------|-------|--------------------------------------|--------------------------------------------------------------------------------------------|
+| pseudoweak-cw-pa | 44.27 | 51.9  | Table 2 - "Ours (UDA)"               | [link](https://drive.google.com/file/d/1mt4ZZ0Dv8Fd0Nok9TZ5SlJ5bJWitf2q7/view?usp=sharing) |
+| weak-image-cw-pa | 50.6  | 58.51 | Table 2 - "Ours (WDA: Image)"        | [link](https://drive.google.com/file/d/1muapekNtpoaaYX1aCKyO0Ftr3cCbNhiJ/view?usp=sharing) |
+| pseudoweak       | 41.74 | 49.08 | Table 4 - Pseudo-Weak +L_c           | [link](https://drive.google.com/file/d/1mm-ArWJ-oXKmSUB_JFbIsSzDSkx0SmvX/view?usp=sharing) |
+| pseudoweak-cw    | 42.65 | 49.91 | Table 4 - Pseudo-Weak +L_c + L^C_adv | [link](https://drive.google.com/file/d/1mmkkvmB_Yhy2NKsi-PKrEOY8N5ZbB500/view?usp=sharing) |
 
 
 

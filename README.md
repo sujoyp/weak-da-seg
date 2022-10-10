@@ -53,11 +53,11 @@ python eval.py \
 
 Definitions of the prefix in each model name:
 
-* *pseudoweak*: use weak label loss with pseudo-weak labels, `--use-pseudo` and `--use-weak`
-* *cw*: use category-wise alignment, `--use-weak-cw`
-* *pa*: use pixel-level alignment, `--use-pixeladapt`
-* *weak-image*: use weak label loss with ground truth image-level weak labels, `--use-pseudo` is false and `--use-weak`
-* *weak-1point*: use weak label loss with ground truth point-level weak labels, `--use-pointloss` and `--use-weak`
+* **pseudoweak**: use weak label loss with pseudo-weak labels, `--use-pseudo` and `--use-weak`
+* **cw**: use category-wise alignment, `--use-weak-cw`
+* **pa**: use pixel-level alignment, `--use-pixeladapt`
+* **weak-image**: use weak label loss with ground truth image-level weak labels, `--use-pseudo` is false and `--use-weak`
+* **weak-1point**: use weak label loss with ground truth point-level weak labels, `--use-pointloss` and `--use-weak`
 
 
 ### Source: GTA5

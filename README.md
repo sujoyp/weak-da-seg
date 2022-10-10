@@ -32,7 +32,7 @@ Evaluate a pre-trained model on the [CityScapes](https://www.cityscapes-dataset.
 * Run the Python command below
 
 ``` shell
-python train.py \
+python eval.py \
     --model deeplab \
     --dataset-target cityscapes \
     --data-path-target datasets/cityscapes \
@@ -45,8 +45,7 @@ python train.py \
     --use-weak \
     --use-weak-cw \
     --use-pseudo \
-    --use-pixeladapt \
-    --val-only
+    --use-pixeladapt
 ```
 
 
@@ -69,7 +68,7 @@ Definitions of the prefix in each model name:
 | weak-image-cw-pa | 53.02 | Table 1 - "Ours (WDA: Image)"       | [link](https://drive.google.com/file/d/1mn6Q6yx8FT1ZCEzdZH1f7MeulV3VWWGR/view?usp=sharing) |
 | weak-1point      | 56.42 | Table 1 - "Ours (WDA: Point)"       | [link](https://drive.google.com/file/d/1mbuXnjNL_tOZW_ZAELUMuGNPV76Oyp_e/view?usp=sharing) |
 | pseudoweak       | 44.2  | Table 3 - Pseudo-Weak +L_c          | [link](https://drive.google.com/file/d/1meqOWkHLPtVKLUX6W1evyzv0ghYTVFFd/view?usp=sharing) |
-| pseudoweak-cw    | 46.55 | Table 3 - Pseudo-Weak +L_c +L^C_adv | [link](https://drive.google.com/file/d/1moOwe7QxrQ7-WqKshPiu58KWIDkwEaMR/view?usp=sharing) |
+| pseudoweak-cw    | 45.55 | Table 3 - Pseudo-Weak +L_c +L^C_adv | [link](https://drive.google.com/file/d/1moOwe7QxrQ7-WqKshPiu58KWIDkwEaMR/view?usp=sharing) |
 
 * NOTE: Paper reports 48.20!
 

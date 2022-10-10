@@ -300,3 +300,7 @@ class TrainerWeakda(Trainer):
                             (self.best_iter, self.best_pred)
                         )
                     self.model.train()
+
+            if i_iter >= self.args.num_steps_stop - 1:
+                print(f"Stop training at {self.args.num_steps_stop} ('num-steps-stop') iterations")
+                break

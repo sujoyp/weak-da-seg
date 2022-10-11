@@ -46,6 +46,10 @@ class TrainerWeakda(Trainer):
         print('Starting Training')
         print('Total Iterations:', self.args.num_steps)
         print('Exp = {}'.format(self.args.snapshot_dir))
+        if self.logger_fid:
+            print('Starting Training', file=self.logger_fid)
+            print('Total Iterations:', self.args.num_steps, file=self.logger_fid)
+            print('Exp = {}'.format(self.args.snapshot_dir), file=self.logger_fid)
         eps = 1e-7
 
         iter_source = enumerate(self.trainloader_source)
@@ -276,16 +280,18 @@ class TrainerWeakda(Trainer):
 
             # print loss
             if i_iter % self.args.print_loss_every == 0 or i_iter >= self.args.num_steps_stop - 1:
-                print(
+                loss_txt = (
                     'iter = {0:8d}/{1:8d}, seg1 = {2:.3f} seg2 = {3:.3f} adv1 = {4:.3f}, '
                     'adv2 = {5:.3f}, D1 = {6:.3f} D2 = {7:.3f}, weak = {8:.3f}, wadv2 = {9:.3f}, '
                     'wD2 = {10:.3f}, pl = {11:.3f}'.format(
                         i_iter, self.args.num_steps, loss_seg_value1, loss_seg_value2,
                         loss_adv_target_value1, loss_adv_target_value2, loss_D_value1,
                         loss_D_value2, loss_weak_target2, loss_weak_cwadv_value2,
-                        loss_weak_D_value2, loss_point_value
-                    )
+                        loss_weak_D_value2, loss_point_value)
                 )
+                print(loss_txt)
+                if self.logger_fid:
+                    print(loss_txt, file=self.logger_fid, flush=True)
 
             # test during training
             if self.args.val:
@@ -299,8 +305,19 @@ class TrainerWeakda(Trainer):
                             'Current best accuracy at iter %d: %f' %
                             (self.best_iter, self.best_pred)
                         )
+                        if self.logger_fid:
+                            print(
+                                'Current best accuracy at iter %d: %f' %
+                                (self.best_iter, self.best_pred),
+                                file=self.logger_fid,
+                            )
                     self.model.train()
 
             if i_iter >= self.args.num_steps_stop - 1:
-                print(f"Stop training at {self.args.num_steps_stop} ('num-steps-stop') iterations")
+                print(f"Stop training at {self.args.num_steps_stop} ('num-steps-stop') iters")
+                if self.logger_fid:
+                    print(
+                        f"Stop training at {self.args.num_steps_stop} ('num-steps-stop') iters",
+                        file=self.logger_fid
+                    )
                 break

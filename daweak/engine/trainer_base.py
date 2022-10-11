@@ -75,6 +75,10 @@ class Trainer:
         if not os.path.exists(args.snapshot_dir) and not args.val_only:
             os.makedirs(args.snapshot_dir)
 
+        self.logger_fid = None
+        if not args.val_only:
+            self.logger_fid = open(args.snapshot_dir + "/log.txt", "w")
+
         if not os.path.exists(args.result_dir):
             os.makedirs(args.result_dir)
 
@@ -181,6 +185,10 @@ class Trainer:
         self.best_iter = 0
         self.is_best = False
 
+    def __del__(self):
+        if self.logger_fid:
+            self.logger_fid.close()
+
     # learning rate scheduler
     def lr_poly(self, base_lr, iter, max_iter, power):
         return base_lr * ((1 - float(iter) / max_iter) ** (power))
@@ -237,6 +245,8 @@ class Trainer:
     # testing during training
     def validation(self, i_iter):
         print('Validating...')
+        if self.logger_fid:
+            print("Validating...", file=self.logger_fid)
 
         def eval(model, image, label, name, num_classes, id=0):
 
@@ -304,11 +314,20 @@ class Trainer:
             print("Source dataset is SYNTHIA -> Evaluating for specific classes:")
             print("mIoU_16 = {:f}".format(mIoU_16))
             print("mIoU_13 = {:f}".format(mIoU_13))
+            if self.logger_fid:
+                print("Source dataset is SYNTHIA -> Evaluating for specific classes:",
+                      file=self.logger_fid)
+                print("mIoU_16 = {:f}".format(mIoU_16), file=self.logger_fid)
+                print("mIoU_13 = {:f}".format(mIoU_13), file=self.logger_fid)
 
         print("Per-class IoUs:")
         print(mIoUs)
         mIoU = round(np.nanmean(mIoUs) * 100, 2)
         print("mIoU (all classes) = {:f}".format(mIoU))
+        if self.logger_fid:
+            print("Per-class IoUs:", file=self.logger_fid)
+            print(mIoUs, file=self.logger_fid)
+            print("mIoU (all classes) = {:f}".format(mIoU), file=self.logger_fid, flush=True)
 
         # save the current best model
         # new_pred = (pixAcc + mIoU)/2
@@ -320,6 +339,9 @@ class Trainer:
         if new_pred > self.best_pred and not self.args.val_only:
             self.best_pred = new_pred
             self.best_iter = i_iter
+            print(f"Storing new best model at iteration {i_iter}")
+            if self.logger_fid:
+                print(f"Storing new best model at iteration {i_iter}", file=self.logger_fid)
             torch.save(
                 self.model.state_dict(),
                 osp.join(

@@ -30,6 +30,8 @@ Evaluate a pre-trained model on the [CityScapes](https://www.cityscapes-dataset.
 * Download CityScapes and put into `datasets/cityscapes` (the folder `leftImg8bit` should be at `datasets/cityscapes/leftImg8bit`)
 * Download the `pseudoweak-cw-pa` pre-trained model from [here](https://drive.google.com/file/d/1mmZWyff3OKmY0V0C83kO1nnkgsm6vfZc/view?usp=sharing), and store it in the directory `models`.
 * Run the Python command below
+* Segmentation outputs are saved with the colorized format via a pre-defined color palette in `daweak/engine/trainer_base.py` (for 19 categories as in Cityscapes)
+* To evaluate other pre-trained models, you can pick a different model path (`--restore-from`). To see if other models use different hyper-parameters, check the shell scripts in the directory `scripts`.
 
 ``` shell
 python eval.py \
@@ -91,7 +93,7 @@ Definitions of the prefix in each model name:
 * Main executing files are in the root folder (see below for testing and training details)
 * Main script for training/testing is `run_weak_da.sh`
 
-See [docs/TESTING.md](docs/TESTING.md) and [docs/TRAINING.md](docs/TRAINING.md) for more details on evaluating a (pre-)trained model and training a new model, respectively.
+See [docs/TRAINING.md](docs/TRAINING.md) for more details on training a new model.
 
 
 ## License

@@ -91,7 +91,7 @@ Definitions of the prefix in each model name:
 * Definitions of experimental options, settings, and parameters are in `daweak/util/option.py`
 * Dataset loaders and model definitions are in the `daweak` library folder
 * Main executing files are in the root folder (see below for testing and training details)
-* Main script for training/testing is `run_weak_da.sh`
+* Main scripts for training are located in the directory `scripts`
 
 See [docs/TRAINING.md](docs/TRAINING.md) for more details on training a new model.
 

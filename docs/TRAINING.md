@@ -1,13 +1,13 @@
-# Main Options in `run_weak_da.sh` for training on your own datasets
+# Main Options in for training on your own datasets
 
 * Download the [GTA5 Dataset](https://download.visinf.tu-darmstadt.de/data/from_games/) as the source domain
 * Download the [SYNTHIA Dataset](https://synthia-dataset.net) as the source domain
 * Download the [Cityscapes Dataset](https://www.cityscapes-dataset.com/) as the target domain
 
-In general, the `run_weak_da.sh` script gives an example of how to train a model.
+In general, the shell scripts `scripts/train_*.sh` give examples of how to train a model.
 
 * During training, models are saved in the `snapshot` folder (default)
-* Specify `--val` in `run_weak_da.sh` if there is a validation set with ground truths in the target domain
+* Specify `--val` if there is a validation set with ground truths in the target domain
 * The initialization of DeepLab models can be downloaded for [GTA5](https://drive.google.com/file/d/1n0zrw_utoFPoR--KwBy8FOQSWWPcKPwy/view?usp=sharing) and [other source datasets](https://drive.google.com/file/d/1mykAx3BW9B7upnIK6rZFDfpvtctWI11m/view?usp=sharing).
 
 
@@ -37,7 +37,7 @@ Therefore, one would also have your own category definition as defined in your s
 
 ## Parameters for Training
 
-* When using GTA5 as the source domain, set the pre-trained model as `pretrain="models/gta5_pretrained.pth"`. If the source domain is the other dataset, set `pretrain="models/MS_DeepLab_resnet_pretrained_COCO_init.pth"`.
+* When using GTA5 as the source domain, set the pre-trained model as `pretrain="models/gta5_pretrained.pth"`. If the source domain is the other dataset, set `pretrain="models/MS_DeepLab_resnet_pretrained_COCO_init.pth"`. These models can be downloaded from here: [`gta5_pretrained.pth`](https://drive.google.com/file/d/1n0zrw_utoFPoR--KwBy8FOQSWWPcKPwy/view?usp=sharing) and [`MS_DeepLab_resnet_pretrained_COCO_init.pth`](https://drive.google.com/file/d/1mykAx3BW9B7upnIK6rZFDfpvtctWI11m/view?usp=sharing).
 
 * There are two options: 1) purely unsupervised domain adaptation (no any ground truth annotations in the target domain), and 2) weakly-supervised domain adaptation (image-level or point-level ground truths in the target domain)
 
